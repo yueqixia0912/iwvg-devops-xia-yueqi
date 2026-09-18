@@ -41,7 +41,7 @@ jobs:
       # PASO: Notificación de Éxito en Slack
       # -------------------------------------------------------------
       - name: Notificar éxito a Slack
-        if: success() # Solo se dispara si la compilación y tests fueron exitosos
+        if: success() #  Solo se dispara si la compilación y tests fueron exitosos
         uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |

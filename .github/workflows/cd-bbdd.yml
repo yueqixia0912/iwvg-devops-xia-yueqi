@@ -59,9 +59,9 @@ jobs:
           username: ${{ secrets.AWS_LIGHTSAIL_USER_MAIN }}
           key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY_MAIN }}
           script: |
-            docker rm -f postgres || true
-            docker network create devops || true
-            docker run -d \
+            sudo docker rm -f postgres || true
+            sudo docker network create devops || true
+            sudo docker run -d \
               --name postgres \
               --restart always \
               --network devops \

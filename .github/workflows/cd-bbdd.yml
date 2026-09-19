@@ -72,4 +72,4 @@ jobs:
               postgres:15.10
 
             echo "✅ Deploy exitoso"
-            docker image prune --filter "until=12h" -f
+            sudo docker image prune --filter "until=12h" -f

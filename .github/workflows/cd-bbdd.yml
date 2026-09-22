@@ -65,7 +65,6 @@ jobs:
               --name postgres \
               --restart always \
               --network devops \
-              -p 8080:8080 \
               -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
               -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
               -e POSTGRES_DB=iwvgdevopsdb \

@@ -1,4 +1,4 @@
-name: CD
+name: CD-master
 on:
   push:
     branches: ['master']
@@ -9,7 +9,7 @@ env:
 
 jobs:
   cd:
-    name: Build & Push GitHub Package & Deploy on Render Docker Image
+    name: Build & Push GitHub Package & Deploy Docker Postgres on AWS Lightsail
     runs-on: ubuntu-22.04
     steps:
       - name: ⬇️ Checkout repository
@@ -59,9 +59,9 @@ jobs:
           username: ${{ secrets.AWS_LIGHTSAIL_USER_MAIN }}
           key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY_MAIN }}
           script: |
-            echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | sudo docker login ${{ env.GHCR_URL }} -u ${{ github.actor }} --password-stdin
 
-            sudo docker pull ghcr.io/${{ env.REPOSITORY }}:latest
+            sudo docker pull ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
             sudo docker rm -f ${{ env.ARTIFACT }} || true
             sudo docker run -d \
               --name ${{ env.ARTIFACT }} \
@@ -73,7 +73,7 @@ jobs:
               -e SPRING_PROFILES_ACTIVE=prod \
               -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
               -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
-              ghcr.io/${{ env.REPOSITORY }}:latest
+              ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
 
             echo "⏳ Esperando a que se levante"
             for i in $(seq 1 6); do

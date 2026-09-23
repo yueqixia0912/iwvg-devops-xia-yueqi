@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 10000
 
 logging:
   level:
@@ -20,9 +20,8 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    dbcp2:
-      driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://postgres:5432/iwvgdevopsdb
-      username: ${POSTGRES_USER}
-      password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/iwvgdevopsdb
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
 

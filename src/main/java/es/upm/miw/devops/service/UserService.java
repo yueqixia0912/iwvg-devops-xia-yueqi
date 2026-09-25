@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -27,7 +28,7 @@ public class UserService {
         return usersDatabase.getUsers().stream().
                 filter(user -> city == null || city.equalsIgnoreCase(user.getCity())).
                 filter(user -> province == null || province.equalsIgnoreCase(user.getProvince())).
-                filter(user -> billable == null || user.isBillable(user) == billable).toList();
+                filter(user -> billable == null || user.isBillable() == billable).toList();
     }
 
     public void delete(long id) {
@@ -35,8 +36,18 @@ public class UserService {
         usersDatabase.delete(id);
     }
 
+    public void update(long id, User user) {
+        read(id);
+        user.setId(id);
+        usersDatabase.update(user);
+    }
+
     public void updateActive(long id) {
         User user = read(id);
         user.setActive(true);
+    }
+
+    public void updateActive(List<User> users) {
+        usersDatabase.updateActive(users);
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -115,6 +117,102 @@ public class UserControllerFT {
         webTestClient.put().uri("/user/999/active").exchange().expectStatus().isNotFound();
     }
 
+    @Test
+    @DirtiesContext
+    void testUpdateUser() {
+        webTestClient.put().uri("/user/1").bodyValue(new User(
+                        1,
+                        "Yueqi Updated",
+                        "Xia Updated",
+                        "yueqi.updated@gmail.com",
+                        "12345678A",
+                        "Calle Nueva 10",
+                        "Madrid",
+                        "Madrid",
+                        "28001",
+                        true)).exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/1").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> {
+                    assertThat(user.getId()).isEqualTo(1);
+                    assertThat(user.getFirstName()).isEqualTo("Yueqi Updated");
+                    assertThat(user.getFamilyName()).isEqualTo("Xia Updated");
+                    assertThat(user.getEmail()).isEqualTo("yueqi.updated@gmail.com");
+                    assertThat(user.getAddress()).isEqualTo("Calle Nueva 10");
+                    assertThat(user.isActive()).isTrue();
+                });
+    }
+
+    @Test
+    void testUpdateUserNotFound() {
+        webTestClient.put().uri("/user/999").bodyValue(new User(
+                        999,
+                        "Test",
+                        "User",
+                        "test@test.com",
+                        "99999999Z",
+                        "Test Address",
+                        "Madrid",
+                        "Madrid",
+                        "28000",
+                        false)).exchange().expectStatus().isNotFound();
+    }
+
+    @Test
+    @DirtiesContext
+    void testUpdateUserForcesId() {
+        webTestClient.put().uri("/user/1").bodyValue(new User(
+                        50,
+                        "Yueqi Updated",
+                        "Xia Updated",
+                        "yueqi.updated@gmail.com",
+                        "12345678A",
+                        "Calle Nueva 10",
+                        "Madrid",
+                        "Madrid",
+                        "28001",
+                        true)).exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/1").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> {
+                    assertThat(user.getId()).isEqualTo(1);
+                    assertThat(user.getFirstName()).isEqualTo("Yueqi Updated");
+                    assertThat(user.isActive()).isTrue();});
+    }
+
+    @Test
+    @DirtiesContext
+    void testUpdateActive() {
+        webTestClient.patch().uri("/user").bodyValue(List.of(new User(1, null, null, null,
+                                null, null, null, null, null, true),
+                        new User(2, null, null, null, null, null,
+                                null, null, null, true),
+                        new User(3, null, null, null, null, null,
+                                null, null, null, false))).
+                exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/1").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> assertThat(user.isActive()).isTrue());
+
+        webTestClient.get().uri("/user/2").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> assertThat(user.isActive()).isTrue());
+
+        webTestClient.get().uri("/user/3").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> assertThat(user.isActive()).isFalse());
+    }
+
+    @Test
+    @DirtiesContext
+    void testUpdateActiveUserNotFound() {
+        webTestClient.patch().uri("/user").bodyValue(List.of(new User(999, null, null,
+                        null, null, null, null, null, null, true))).
+                exchange().expectStatus().isNoContent();
+    }
+
+    @Test
+    void testUpdateActiveEmptyList() {
+        webTestClient.patch().uri("/user").bodyValue(List.of()).exchange().expectStatus().isNoContent();
+    }
 
 
 }

@@ -34,10 +34,22 @@ public class UserController {
         userService.delete(id);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable long id, @RequestBody User user) {
+        userService.update(id, user);
+    }
+
     @PutMapping("/{id}/active")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateActive(@PathVariable long id) {
 
         userService.updateActive(id);
+    }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateActive(@RequestBody List<User> users) {
+        userService.updateActive(users);
     }
 }

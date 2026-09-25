@@ -34,4 +34,60 @@ public class UserControllerFT {
         webTestClient.get().uri("/user/999").exchange().expectStatus().isNotFound();
     }
 
+    @Test
+    void testFindByCity() {
+        webTestClient.get().uri("/user?city=Madrid").exchange().expectStatus().isOk().
+                expectBodyList(User.class).value(users -> assertThat(users).
+                        extracting(User::getId).containsExactly(1L, 2L, 4L, 10L, 11L));
+    }
+
+    @Test
+    void testFindByProvince() {
+        webTestClient.get().uri("/user?province=Madrid").exchange().expectStatus().isOk().
+                expectBodyList(User.class).value(users -> assertThat(users).
+                        extracting(User::getId).containsExactly(1L, 2L, 4L, 11L));
+    }
+
+    @Test
+    void testFindBillableUsers() {
+        webTestClient.get().uri("/user?billable=true").exchange().expectStatus().isOk().
+                expectBodyList(User.class).value(users -> assertThat(users).
+                        extracting(User::getId).containsExactly(1L, 2L, 3L));
+    }
+
+    @Test
+    void testFindNonBillableUsers() {
+        webTestClient.get().uri("/user?billable=false").exchange().expectStatus().isOk().
+                expectBodyList(User.class).value(users -> assertThat(users).
+                        extracting(User::getId).containsExactly(4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L));
+    }
+
+    @Test
+    void testFindByCityAndProvince() {
+        webTestClient.get().uri("/user?city=Madrid&province=Madrid").exchange().expectStatus().isOk().
+                expectBodyList(User.class).value(users -> assertThat(users).
+                        extracting(User::getId).containsExactly(1L, 2L, 4L, 11L));
+    }
+
+    @Test
+    void testFindByCityProvinceAndBillable() {
+        webTestClient.get().uri("/user?city=Madrid&province=Madrid&billable=true").exchange().
+                expectStatus().isOk().expectBodyList(User.class).value(users -> assertThat(users).
+                        extracting(User::getId).containsExactly(1L, 2L));
+    }
+
+    @Test
+    void testFindNonBillableUsersByCity() {
+        webTestClient.get().uri("/user?city=Valencia&billable=false").exchange().
+                expectStatus().isOk().expectBodyList(User.class).value(users -> assertThat(users).
+                        extracting(User::getId).containsExactly(7L, 8L, 12L));
+    }
+
+    @Test
+    void testFindWithoutFilters() {
+        webTestClient.get().uri("/user").exchange().expectStatus().isOk().expectBodyList(User.class).
+                value(users -> assertThat(users).extracting(User::getId).
+                        containsExactly(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L));
+    }
+
 }

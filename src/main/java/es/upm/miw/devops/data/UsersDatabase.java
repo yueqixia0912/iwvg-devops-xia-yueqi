@@ -21,7 +21,8 @@ public class UsersDatabase {
                 "Calle Gran Vía 25",
                 "Madrid",
                 "Madrid",
-                "28013"
+                "28013",
+                false
         ));
 
         this.users.add(new User(
@@ -33,7 +34,8 @@ public class UsersDatabase {
                 "Calle Alcalá 120",
                 "Madrid",
                 "Madrid",
-                "28009"
+                "28009",
+                false
         ));
 
         this.users.add(new User(
@@ -45,7 +47,8 @@ public class UsersDatabase {
                 "Carrer de Mallorca 45",
                 "Barcelona",
                 "Barcelona",
-                "08029"
+                "08029",
+                false
         ));
 
         // Missing firstName
@@ -58,7 +61,8 @@ public class UsersDatabase {
                 "Calle Serrano 45",
                 "Madrid",
                 "Madrid",
-                "28006"
+                "28006",
+                false
         ));
 
         // Missing familyName
@@ -71,7 +75,8 @@ public class UsersDatabase {
                 "Calle Valencia 32",
                 "Barcelona",
                 "Barcelona",
-                "08015"
+                "08015",
+                false
         ));
 
         // Missing email
@@ -84,7 +89,8 @@ public class UsersDatabase {
                 "Calle Sierpes 30",
                 "Sevilla",
                 "Sevilla",
-                "41004"
+                "41004",
+                false
         ));
 
         // Missing identity
@@ -97,7 +103,8 @@ public class UsersDatabase {
                 "Calle Colón 24",
                 "Valencia",
                 "Valencia",
-                "46004"
+                "46004",
+                false
         ));
 
         // Missing address
@@ -110,7 +117,8 @@ public class UsersDatabase {
                 null,
                 "Valencia",
                 "Valencia",
-                "46001"
+                "46001",
+                false
         ));
 
         // Missing city
@@ -123,7 +131,8 @@ public class UsersDatabase {
                 "Calle Mallorca 15",
                 null,
                 "Barcelona",
-                "08001"
+                "08001",
+                false
         ));
 
         // Missing province
@@ -136,7 +145,8 @@ public class UsersDatabase {
                 "Calle Princesa 10",
                 "Madrid",
                 null,
-                "28008"
+                "28008",
+                false
         ));
 
         // Missing postalCode
@@ -149,7 +159,8 @@ public class UsersDatabase {
                 "Calle Alcalá 75",
                 "Madrid",
                 "Madrid",
-                null
+                null,
+                false
         ));
 
         this.users.add(new User(
@@ -161,7 +172,8 @@ public class UsersDatabase {
                 "Calle Colón 18",
                 "Valencia",
                 null,
-                null
+                null,
+                false
         ));
     }
 

@@ -10,13 +10,14 @@ public class User {
     private String city;
     private String province;
     private String postalCode;
+    private boolean active;
 
     public User(){
 
     }
 
     public User(long id, String firstName, String familyName, String email, String identity, String address,
-                String city, String province, String postalCode) {
+                String city, String province, String postalCode, boolean active) {
         this.id = id;
         this.firstName = firstName;
         this.familyName = familyName;
@@ -26,6 +27,7 @@ public class User {
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
+        this.active = active;
     }
 
     public boolean isBillable(User user) {
@@ -116,5 +118,13 @@ public class User {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -102,4 +102,19 @@ public class UserControllerFT {
         webTestClient.delete().uri("/user/999").exchange().expectStatus().isNotFound();
     }
 
+    @Test
+    void testActivateUserAndReadIt() {
+        webTestClient.put().uri("/user/1/active").exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/1").exchange().expectStatus().isOk()
+                .expectBody(User.class).value(user -> assertThat(user.isActive()).isTrue());
+    }
+
+    @Test
+    void testActivateUserNotFound() {
+        webTestClient.put().uri("/user/999/active").exchange().expectStatus().isNotFound();
+    }
+
+
+
 }

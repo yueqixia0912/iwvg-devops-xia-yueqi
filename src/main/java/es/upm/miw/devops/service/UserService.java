@@ -34,4 +34,9 @@ public class UserService {
         read(id);
         usersDatabase.delete(id);
     }
+
+    public void updateActive(long id) {
+        User user = read(id);
+        user.setActive(true);
+    }
 }

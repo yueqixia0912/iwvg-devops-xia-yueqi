@@ -129,4 +129,80 @@ public class UserServiceTest {
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("User not found: 999");
     }
+
+    @Test
+    void testUpdateUser() {
+        User user = new User(
+                1,
+                "Yueqi Updated",
+                "Xia Updated",
+                "yueqi.updated@gmail.com",
+                "12345678A",
+                "   ",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true
+        );
+
+        userService.update(1, user);
+
+        User updated = userService.read(1);
+
+        assertThat(updated.getId()).isEqualTo(1);
+        assertThat(updated.getFirstName()).isEqualTo("Yueqi Updated");
+        assertThat(updated.getFamilyName()).isEqualTo("Xia Updated");
+        assertThat(updated.getEmail()).isEqualTo("yueqi.updated@gmail.com");
+        assertThat(updated.getAddress()).isEqualTo("   ");
+        assertThat(updated.getCity()).isEqualTo("Madrid");
+        assertThat(updated.getProvince()).isEqualTo("Madrid");
+        assertThat(updated.getPostalCode()).isEqualTo("28001");
+        assertThat(updated.isActive()).isTrue();
+
+        assertThat(updated.isBillable()).isFalse();
+    }
+
+    @Test
+    void testUpdateUserNotFound() {
+        User user = new User(
+                999,
+                "Test",
+                "User",
+                "test@test.com",
+                "99999999Z",
+                "Test Address",
+                "Madrid",
+                "Madrid",
+                "28000",
+                false
+        );
+
+        assertThatThrownBy(() -> userService.update(999, user)).isInstanceOf(ResponseStatusException.class).
+                hasMessageContaining("User not found: 999");
+    }
+
+    @Test
+    void testUpdateUserForcesId() {
+        User user = new User(
+                50,
+                "Yueqi Updated",
+                "Xia Updated",
+                "yueqi.updated@gmail.com",
+                "12345678A",
+                "Calle Nueva 10",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true
+        );
+
+        userService.update(1, user);
+
+        User updated = userService.read(1);
+
+        assertThat(updated.getId()).isEqualTo(1);
+        assertThat(updated.getFirstName()).isEqualTo("Yueqi Updated");
+        assertThat(updated.getFamilyName()).isEqualTo("Xia Updated");
+        assertThat(updated.isActive()).isTrue();
+    }
 }

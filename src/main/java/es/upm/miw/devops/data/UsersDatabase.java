@@ -184,4 +184,11 @@ public class UsersDatabase {
     public void delete(long id) {
         users.removeIf(user -> user.getId() == id);
     }
+
+    public void update(User updatedUser) {
+        users.replaceAll(user ->
+                user.getId() == updatedUser.getId()
+                        ? updatedUser
+                        : user);
+    }
 }

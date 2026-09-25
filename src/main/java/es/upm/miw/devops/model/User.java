@@ -30,7 +30,7 @@ public class User {
         this.active = active;
     }
 
-    public boolean isBillable(User user) {
+    public boolean isBillable() {
         return hasContent(firstName) &&
                 hasContent(familyName) &&
                 hasContent(email) &&

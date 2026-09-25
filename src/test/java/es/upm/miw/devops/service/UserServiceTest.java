@@ -205,4 +205,64 @@ public class UserServiceTest {
         assertThat(updated.getFamilyName()).isEqualTo("Xia Updated");
         assertThat(updated.isActive()).isTrue();
     }
+
+    @Test
+    void testUpdateActive() {
+        List<User> users = List.of(new User(1, null, null, null,
+                        null, null, null, null, null, true),
+                new User(2, null, null, null, null,
+                        null, null, null, null, true),
+                new User(3, null, null, null, null,
+                        null, null, null, null, false)
+        );
+
+        userService.updateActive(users);
+
+        assertThat(userService.read(1).isActive()).isTrue();
+        assertThat(userService.read(2).isActive()).isTrue();
+        assertThat(userService.read(3).isActive()).isFalse();
+    }
+
+    @Test
+    void testUpdateActiveToFalse() {
+        userService.updateActive(List.of(new User(1, null, null,
+                null, null, null, null, null, null, true)));
+
+        assertThat(userService.read(1).isActive()).isTrue();
+
+        userService.updateActive(List.of(new User(1, null, null,
+                null, null, null, null, null, null, false)));
+
+        assertThat(userService.read(1).isActive()).isFalse();
+    }
+
+    @Test
+    void testUpdateActiveUserNotFound() {
+        userService.updateActive(List.of(new User(999, null, null,
+                null, null, null, null, null, null, true)));
+
+        assertThatThrownBy(() -> userService.read(999)).isInstanceOf(ResponseStatusException.class).
+                hasMessageContaining("User not found: 999");
+    }
+
+    @Test
+    void testUpdateActiveDoesNotChangeOtherAttributes() {
+        User original = userService.read(1);
+
+        userService.updateActive(List.of(new User(1, null, null, null,
+                null, null, null, null, null, true)));
+
+        User updated = userService.read(1);
+
+        assertThat(updated.getId()).isEqualTo(original.getId());
+        assertThat(updated.getFirstName()).isEqualTo(original.getFirstName());
+        assertThat(updated.getFamilyName()).isEqualTo(original.getFamilyName());
+        assertThat(updated.getEmail()).isEqualTo(original.getEmail());
+        assertThat(updated.getIdentity()).isEqualTo(original.getIdentity());
+        assertThat(updated.getAddress()).isEqualTo(original.getAddress());
+        assertThat(updated.getCity()).isEqualTo(original.getCity());
+        assertThat(updated.getProvince()).isEqualTo(original.getProvince());
+        assertThat(updated.getPostalCode()).isEqualTo(original.getPostalCode());
+        assertThat(updated.isActive()).isTrue();
+    }
 }

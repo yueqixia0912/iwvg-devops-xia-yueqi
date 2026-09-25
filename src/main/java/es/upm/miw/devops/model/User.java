@@ -15,7 +15,8 @@ public class User {
 
     }
 
-    public User(long id, String firstName, String familyName, String email, String identity, String address, String city, String province, String postalCode) {
+    public User(long id, String firstName, String familyName, String email, String identity, String address,
+                String city, String province, String postalCode) {
         this.id = id;
         this.firstName = firstName;
         this.familyName = familyName;

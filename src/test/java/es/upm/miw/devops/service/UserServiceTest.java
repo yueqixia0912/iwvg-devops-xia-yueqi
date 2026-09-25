@@ -1,6 +1,7 @@
 package es.upm.miw.devops.service;
 
 import es.upm.miw.devops.data.UsersDatabase;
+import es.upm.miw.devops.model.Role;
 import es.upm.miw.devops.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -109,7 +110,7 @@ public class UserServiceTest {
 
     @Test
     void testUserIsInactiveInitially() {
-        User user = userService.read(1);
+        User user = userService.read(2);
 
         assertThat(user.isActive()).isFalse();
     }
@@ -225,15 +226,15 @@ public class UserServiceTest {
 
     @Test
     void testUpdateActiveToFalse() {
-        userService.updateActive(List.of(new User(1, null, null,
+        userService.updateActive(List.of(new User(2, null, null,
                 null, null, null, null, null, null, true)));
 
-        assertThat(userService.read(1).isActive()).isTrue();
+        assertThat(userService.read(2).isActive()).isTrue();
 
-        userService.updateActive(List.of(new User(1, null, null,
+        userService.updateActive(List.of(new User(2, null, null,
                 null, null, null, null, null, null, false)));
 
-        assertThat(userService.read(1).isActive()).isFalse();
+        assertThat(userService.read(2).isActive()).isFalse();
     }
 
     @Test
@@ -264,5 +265,24 @@ public class UserServiceTest {
         assertThat(updated.getProvince()).isEqualTo(original.getProvince());
         assertThat(updated.getPostalCode()).isEqualTo(original.getPostalCode());
         assertThat(updated.isActive()).isTrue();
+    }
+
+    @Test
+    void testAdminCannotBeDeactivated() {
+        assertThat(userService.read(1).getRole()).isEqualTo(Role.ADMIN);
+        assertThat(userService.read(1).isActive()).isTrue();
+
+        userService.updateActive(List.of(new User(1, null, null, null, null,
+                        null, null, null, null, false, Role.ADMIN)));
+
+        assertThat(userService.read(1).isActive()).isTrue();
+    }
+
+    @Test
+    void testAdminCanBeActivated() {
+        userService.updateActive(List.of(new User(1, null, null, null, null,
+                        null, null, null, null, true, Role.ADMIN)));
+
+        assertThat(userService.read(1).isActive()).isTrue();
     }
 }

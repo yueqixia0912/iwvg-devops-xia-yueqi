@@ -2,17 +2,19 @@
 ## Ingeniería Web: Visión General (IWVG) DevOps
 > Este proyecto es un apoyo docente de la asignatura. Cada release liberada corresponde al código utilizado en clase del curso indicado
 
-[![GitHub](https://img.shields.io/github/license/miw-upm/iwvg-devops?color=informational)](https://github.com/miw-upm/iwvg-devops/blob/develop/LICENSE.md)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/miw-upm/iwvg-devops?color=informational)](https://github.com/miw-upm/iwvg-devops/releases)
-![GitHub Release Date](https://img.shields.io/github/release-date/miw-upm/iwvg-devops?color=informational)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/miw-upm/iwvg-devops)
-![GitHub issues](https://img.shields.io/github/issues/miw-upm/iwvg-devops?color=important)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/miw-upm/iwvg-devops?color=informational)
+[![GitHub](https://img.shields.io/github/license/yueqixia0912/iwvg-devops-xia-yueqi?color=informational)](https://github.com/yueqixia0912/iwvg-devops-xia-yueqi/blob/develop/LICENSE.md)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/yueqixia0912/iwvg-devops-xia-yueqi?color=informational)](https://github.com/miw-upm/iwvg-devops/releases)
+![GitHub Release Date](https://img.shields.io/github/release-date/yueqixia0912/iwvg-devops-xia-yueqi?color=informational)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/yueqixia0912/iwvg-devops-xia-yueqi)
+![GitHub issues](https://img.shields.io/github/issues/yueqixia0912/iwvg-devops-xia-yueqi?color=important)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/yueqixia0912/iwvg-devops-xia-yueqi?color=informational)
 
 ### Estado del código
-[![DevOps](https://github.com/miw-upm/iwvg-devops/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/miw-upm/iwvg-devops/actions/workflows/continuous-integration.yml)
+[![CI](https://github.com/yueqixia0912/iwvg-devops-xia-yueqi/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/yueqixia0912/iwvg-devops-xia-yueqi/actions/workflows/continuous-integration.yml)
 [![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=yueqixia0912_iwvg-devops-xia-yueqi&metric=alert_status&token=55f7721915fe19ffc04d0a003995a364a44081a9)](https://sonarcloud.io/summary/new_code?id=yueqixia0912_iwvg-devops-xia-yueqi)
-[![Render broken](https://iwvg-devops-latest.onrender.com/version-badge)](https://iwvg-devops-latest.onrender.com/swagger-ui.html)
+[![CD-master](https://github.com/yueqixia0912/iwvg-devops-xia-yueqi/actions/workflows/cd-master.yml/badge.svg)](https://github.com/yueqixia0912/iwvg-devops-xia-yueqi/actions/workflows/cd-master.yml)
+[![Render broken](https://iwvg-devops-xia-yueqi.onrender.com/version-badge)](https://iwvg-devops-xia-yueqi.onrender.com/swagger-ui.html)
+[![AWS](http://51.49.121.7:8080/version-badge)](http://51.49.121.7:8080/swagger-ui.html)
 
 
 ### Tecnologías necesarias

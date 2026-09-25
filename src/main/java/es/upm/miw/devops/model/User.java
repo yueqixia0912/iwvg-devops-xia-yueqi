@@ -11,6 +11,7 @@ public class User {
     private String province;
     private String postalCode;
     private boolean active;
+    private Role role;
 
     public User(){
 
@@ -18,6 +19,12 @@ public class User {
 
     public User(long id, String firstName, String familyName, String email, String identity, String address,
                 String city, String province, String postalCode, boolean active) {
+        this(id, firstName, familyName, email, identity, address, city, province,
+                postalCode, active, Role.USER);
+    }
+
+    public User(long id, String firstName, String familyName, String email, String identity, String address,
+                String city, String province, String postalCode, boolean active, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.familyName = familyName;
@@ -28,6 +35,7 @@ public class User {
         this.province = province;
         this.postalCode = postalCode;
         this.active = active;
+        this.role = role;
     }
 
     public boolean isBillable() {
@@ -126,5 +134,13 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

@@ -1,5 +1,6 @@
 package es.upm.miw.devops.functionaltests;
 
+import es.upm.miw.devops.model.Role;
 import es.upm.miw.devops.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -212,6 +213,45 @@ public class UserControllerFT {
     @Test
     void testUpdateActiveEmptyList() {
         webTestClient.patch().uri("/user").bodyValue(List.of()).exchange().expectStatus().isNoContent();
+    }
+
+    @Test
+    @DirtiesContext
+    void testUpdateActiveToFalse() {
+        webTestClient.patch().uri("/user").bodyValue(List.of(new User(2, null, null,
+                        null, null, null, null, null, null, false))).
+                exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/2").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> assertThat(user.isActive()).isFalse());
+    }
+
+    @Test
+    @DirtiesContext
+    void testAdminCannotBeDeactivated() {
+        webTestClient.patch().uri("/user").bodyValue(List.of(new User(1, null, null,
+                        null, null, null, null, null, null,
+                        false, Role.ADMIN))).exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/1").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> {
+                    assertThat(user.getRole()).isEqualTo(Role.ADMIN);
+                    assertThat(user.isActive()).isTrue();
+                });
+    }
+
+    @Test
+    @DirtiesContext
+    void testAdminCanBeActivated() {
+        webTestClient.patch().uri("/user").bodyValue(List.of(new User(1, null, null,
+                null, null, null, null, null, null,
+                true, Role.ADMIN))).exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/1").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> {
+                    assertThat(user.getRole()).isEqualTo(Role.ADMIN);
+                    assertThat(user.isActive()).isTrue();
+                });
     }
 
 

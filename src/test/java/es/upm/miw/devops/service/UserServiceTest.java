@@ -106,4 +106,27 @@ public class UserServiceTest {
         assertThatThrownBy(() -> userService.delete(999)).isInstanceOf(ResponseStatusException.class).
                 hasMessageContaining("User not found: 999");
     }
+
+    @Test
+    void testUserIsInactiveInitially() {
+        User user = userService.read(1);
+
+        assertThat(user.isActive()).isFalse();
+    }
+
+    @Test
+    void testActivateUser() {
+        userService.updateActive(1);
+
+        User user = userService.read(1);
+
+        assertThat(user.isActive()).isTrue();
+    }
+
+    @Test
+    void testActivateUserNotFound() {
+        assertThatThrownBy(() -> userService.updateActive(999))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("User not found: 999");
+    }
 }

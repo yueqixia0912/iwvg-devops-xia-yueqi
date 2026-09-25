@@ -46,4 +46,8 @@ public class UserService {
         User user = read(id);
         user.setActive(true);
     }
+
+    public void updateActive(List<User> users) {
+        usersDatabase.updateActive(users);
+    }
 }

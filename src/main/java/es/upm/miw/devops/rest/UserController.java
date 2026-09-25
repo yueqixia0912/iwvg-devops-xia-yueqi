@@ -46,4 +46,10 @@ public class UserController {
 
         userService.updateActive(id);
     }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateActive(@RequestBody List<User> users) {
+        userService.updateActive(users);
+    }
 }

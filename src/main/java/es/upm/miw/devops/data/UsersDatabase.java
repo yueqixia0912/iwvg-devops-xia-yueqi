@@ -191,4 +191,11 @@ public class UsersDatabase {
                         ? updatedUser
                         : user);
     }
+
+    public void updateActive(List<User> updatedUsers) {
+        updatedUsers.forEach(updatedUser ->
+                users.stream().filter(user -> user.getId() == updatedUser.getId()).
+                        findFirst().ifPresent(user -> user.setActive(updatedUser.isActive()))
+        );
+    }
 }

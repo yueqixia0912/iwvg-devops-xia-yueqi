@@ -28,7 +28,20 @@ public class User {
         this.postalCode = postalCode;
     }
 
+    public boolean isBillable(User user) {
+        return hasContent(firstName) &&
+                hasContent(familyName) &&
+                hasContent(email) &&
+                hasContent(identity) &&
+                hasContent(address) &&
+                hasContent(city) &&
+                hasContent(province) &&
+                hasContent(postalCode);
+    }
 
+    private boolean hasContent(String value) {
+        return value != null && !value.isBlank();
+    }
 
     public long getId() {
         return id;

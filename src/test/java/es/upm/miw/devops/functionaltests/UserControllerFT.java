@@ -9,6 +9,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -176,6 +178,40 @@ public class UserControllerFT {
                     assertThat(user.getId()).isEqualTo(1);
                     assertThat(user.getFirstName()).isEqualTo("Yueqi Updated");
                     assertThat(user.isActive()).isTrue();});
+    }
+
+    @Test
+    @DirtiesContext
+    void testUpdateActive() {
+        webTestClient.patch().uri("/user").bodyValue(List.of(new User(1, null, null, null,
+                                null, null, null, null, null, true),
+                        new User(2, null, null, null, null, null,
+                                null, null, null, true),
+                        new User(3, null, null, null, null, null,
+                                null, null, null, false))).
+                exchange().expectStatus().isNoContent();
+
+        webTestClient.get().uri("/user/1").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> assertThat(user.isActive()).isTrue());
+
+        webTestClient.get().uri("/user/2").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> assertThat(user.isActive()).isTrue());
+
+        webTestClient.get().uri("/user/3").exchange().expectStatus().isOk().expectBody(User.class).
+                value(user -> assertThat(user.isActive()).isFalse());
+    }
+
+    @Test
+    @DirtiesContext
+    void testUpdateActiveUserNotFound() {
+        webTestClient.patch().uri("/user").bodyValue(List.of(new User(999, null, null,
+                        null, null, null, null, null, null, true))).
+                exchange().expectStatus().isNoContent();
+    }
+
+    @Test
+    void testUpdateActiveEmptyList() {
+        webTestClient.patch().uri("/user").bodyValue(List.of()).exchange().expectStatus().isNoContent();
     }
 
 

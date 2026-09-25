@@ -29,4 +29,9 @@ public class UserService {
                 filter(user -> province == null || province.equalsIgnoreCase(user.getProvince())).
                 filter(user -> billable == null || user.isBillable(user) == billable).toList();
     }
+
+    public void delete(long id) {
+        read(id);
+        usersDatabase.delete(id);
+    }
 }

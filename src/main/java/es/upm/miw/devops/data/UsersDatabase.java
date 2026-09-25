@@ -168,4 +168,8 @@ public class UsersDatabase {
     public List<User> getUsers(){
         return users;
     }
+
+    public void delete(long id) {
+        users.removeIf(user -> user.getId() == id);
+    }
 }

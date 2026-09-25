@@ -93,5 +93,17 @@ public class UserServiceTest {
                 containsExactly(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L);
     }
 
+    @Test
+    void testDeleteExistingUser() {
+        userService.delete(12);
 
+        assertThatThrownBy(() -> userService.read(12)).isInstanceOf(ResponseStatusException.class).
+                hasMessageContaining("User not found: 12");
+    }
+
+    @Test
+    void testDeleteNotExistingUser() {
+        assertThatThrownBy(() -> userService.delete(999)).isInstanceOf(ResponseStatusException.class).
+                hasMessageContaining("User not found: 999");
+    }
 }

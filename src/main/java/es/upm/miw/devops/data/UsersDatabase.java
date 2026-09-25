@@ -1,5 +1,6 @@
 package es.upm.miw.devops.data;
 
+import es.upm.miw.devops.model.Role;
 import es.upm.miw.devops.model.User;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,8 @@ public class UsersDatabase {
                 "Madrid",
                 "Madrid",
                 "28013",
-                false
+                true,
+                Role.ADMIN
         ));
 
         this.users.add(new User(
@@ -194,8 +196,12 @@ public class UsersDatabase {
 
     public void updateActive(List<User> updatedUsers) {
         updatedUsers.forEach(updatedUser ->
-                users.stream().filter(user -> user.getId() == updatedUser.getId()).
-                        findFirst().ifPresent(user -> user.setActive(updatedUser.isActive()))
+                users.stream().filter(user -> user.getId() == updatedUser.getId()).findFirst().
+                        ifPresent(user -> {
+                            if (user.getRole() != Role.ADMIN || updatedUser.isActive()) {
+                                user.setActive(updatedUser.isActive());
+                            }
+                        })
         );
     }
 }

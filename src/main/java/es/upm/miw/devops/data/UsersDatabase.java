@@ -184,4 +184,18 @@ public class UsersDatabase {
     public void delete(long id) {
         users.removeIf(user -> user.getId() == id);
     }
+
+    public void update(User updatedUser) {
+        users.replaceAll(user ->
+                user.getId() == updatedUser.getId()
+                        ? updatedUser
+                        : user);
+    }
+
+    public void updateActive(List<User> updatedUsers) {
+        updatedUsers.forEach(updatedUser ->
+                users.stream().filter(user -> user.getId() == updatedUser.getId()).
+                        findFirst().ifPresent(user -> user.setActive(updatedUser.isActive()))
+        );
+    }
 }
